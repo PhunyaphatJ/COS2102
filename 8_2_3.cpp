@@ -66,30 +66,28 @@ class Rectangle{
 			cout<<num<<endl;
 		}
 		
-		float operator++(){
-			return ++height;
+		Rectangle operator++(){
+			height++;
+			return *this;
 		}
-		float operator++(int){
-			float w = width++;
-			return w;
+		Rectangle operator++(int){
+			width++;
+			return *this;
 		}
-		friend float operator--(Rectangle &x){
-			if(x.width<=0&&x.height<=0){
-				cout<<"--xwidht height <=0\n";
-				exit(1);
+		friend Rectangle operator--(Rectangle &x){
+			if(x.width<=1){
+				return x;
 			}
-			return --x.height;
+			return Rectangle(x.width,--x.height);
 		}
-		friend float operator--(Rectangle &x,int){
-			if(x.width<=0&&x.height<=0){
-				cout<<"x--widht height <=0\n";
-				exit(1);
+		friend Rectangle operator--(Rectangle &x,int){
+			if(x.width<=1){
+				return x;
 			}
-			float w = x.width--;
-			return w;
+			return Rectangle(--x.width,x.height);
 		}
 		bool operator <(Rectangle &x2){
-			return (this->rectangleArea()<x2.rectangleArea())?true:false;
+			return ((*this).rectangleArea()<x2.rectangleArea())?true:false;
 		}
 		bool operator <=(Rectangle &x2){
 			return (this->rectangleArea()<=x2.rectangleArea())?true:false;
@@ -107,7 +105,6 @@ class Rectangle{
 			switch(x){
 				case 0:
 					return height;
-					break;
 				case 1:
 					return width;
 				default:
@@ -138,21 +135,19 @@ int main(){
 	++a;
 	cout<<"--------"<<endl;
 	a.show();
-	float posA = a++;
+	Rectangle posA = a++;
 	cout<<"--------"<<endl;
-	cout<<"posA postfix = "<<posA<<endl;
 	a.show();
 	cout<<"--------"<<endl;
 	Rectangle b(2,3);
 	cout<<"b"<<endl;
 	b.show();
-	cout<<"--------"<<endl;
 	--b;
+	cout<<"--------"<<endl;
 	cout<<"--prefix"<<endl;
 	b.show();
-	float posB = b--;
+	Rectangle posB = b--;
 	cout<<"--------"<<endl;
-	cout<<"posB postfix = "<<posB<<endl;
 	cout<<"postfix--"<<endl;
 	b.show();
 	Rectangle c(2,2),d(2,2);
